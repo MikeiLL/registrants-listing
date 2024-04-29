@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: mZ Mindbody Authentication
+ * Plugin Name: mZ MBO Registrants List
  *
- * Description: Child plugin for mZoo Mindbody Interface, which adds support of OAuth login via Mindbody.
+ * Description: Child plugin for mZoo Mindbody Interface to show minimized calendar with optional registrants by click..
  *
  * @package MzRegistrantsListing
  *
@@ -39,7 +39,7 @@ define( NS . 'PLUGIN_NAME_URL', plugin_dir_url( __FILE__ ) );
 
 define( NS . 'PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
-define( NS . 'MINIMUM_PHP_VERSION', 7.1 );
+define( NS . 'MINIMUM_PHP_VERSION', 8.1 );
 
 define( NS . 'INIT_LEVEL', 20 );
 
@@ -50,17 +50,7 @@ if ( version_compare( PHP_VERSION, MINIMUM_PHP_VERSION, '<' ) ) {
     add_action( 'admin_notices', NS . 'minimum_php_version' );
     add_action( 'admin_init', __NAMESPACE__ . '\deactivate_plugins', INIT_LEVEL );
 } else {
-
-
-  function mindbody_oauth_uninstall(){
-    // Clear Admin Options
-    delete_option('mzmbo_oauth_options');
-  }
-
-    register_uninstall_hook( __FILE__, __NAMESPACE__ . '\mindbody_oauth_uninstall' );
-
     add_action( 'plugins_loaded', __NAMESPACE__ . '\mindbody_auth_has_mindbody_api', INIT_LEVEL );
-
 }
 
 
@@ -106,7 +96,7 @@ function deactivate_plugins() {
  * @return void.
  */
 function minimum_php_version() {
-    activation_failed( __( 'MZ MBO Access requires PHP version', 'mz-mbo-auth' ) . sprintf( ' %1.1f.', MINIMUM_PHP_VERSION ) );
+    activation_failed( __( 'Registrants List requires PHP version', 'mz-mbo-auth' ) . sprintf( ' %1.1f.', MINIMUM_PHP_VERSION ) );
 }
 
 /**
@@ -114,14 +104,10 @@ function minimum_php_version() {
  */
 function mindbody_auth_has_mindbody_api() {
     if ( ! class_exists( MZ . '\Core\MzMindbodyApi' ) ) {
-        activation_failed( __( 'Mindbody Authentication requires MZ Mindbody Api.', 'mz-mbo-auth' ) );
+        activation_failed( __( 'Registrants List requires MZ Mindbody Api.', 'mz-mbo-auth' ) );
         add_action( 'admin_init', __NAMESPACE__ . '\deactivate_plugins', INIT_LEVEL );
     } else {
     // Load the plugin.
-    require_once 'session.php';
-    require_once 'admin-settings.php';
-    require_once 'mindbody.php';
-    require_once 'request.php';
     require_once 'rest.php';
     require_once 'enqueue.php';
     }
@@ -133,5 +119,38 @@ function enqueue(){
     //wp_enqueue_style('string $handle', mixed $src, array $deps, mixed $ver, bol $in_footer );
 }
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\enqueue');
+
+add_shortcode('mz_registrants_list', function(){
+    $schedule_object = new \MZoo\MzMindbody\Schedule\RetrieveSchedule(  );
+
+    // Call the API and if fails, return error message.
+    if ( false === $schedule_object->get_mbo_results() ) {
+        echo '<div>' . __( 'Error returning schedule from MBO for display.', 'mz-mindbody-api' ) . '</div>';
+    }
+
+    $template_loader       = new \MZoo\MzMindbody\Core\TemplateLoader();
+    $template_data['time_format'] = $schedule_object->time_format;
+    $template_data['date_format'] = $schedule_object->date_format;
+    $horizontal_schedule = $schedule_object->sortClassesByDateThenTime();
+    $template_data = array(
+        'time_format'          => $schedule_object->time_format,
+        'date_format'          => $schedule_object->date_format,
+        'locations_dictionary' => $schedule_object->locations_dictionary,
+        'horizontal_schedule'  => $horizontal_schedule,
+    );
+    $template_loader->set_template_data( $template_data );
+    ob_start();
+    $template_loader->get_template_part( 'registrants_listing' );
+    /* echo "<pre>";
+    print_r($horizontal_schedule);
+    echo "</pre>"; */
+    ?>
+    <div id="mz_registrants_list">
+        <h1>Registrants List</h1>
+        <p>Here is a list of registrants</p>
+    </div>
+    <?php
+    return ob_get_clean();
+});
 
 ?>
