@@ -127,28 +127,43 @@ add_shortcode('mz_registrants_list', function(){
     if ( false === $schedule_object->get_mbo_results() ) {
         echo '<div>' . __( 'Error returning schedule from MBO for display.', 'mz-mindbody-api' ) . '</div>';
     }
-
-    $template_loader       = new \MZoo\MzMindbody\Core\TemplateLoader();
-    $template_data['time_format'] = $schedule_object->time_format;
-    $template_data['date_format'] = $schedule_object->date_format;
     $horizontal_schedule = $schedule_object->sortClassesByDateThenTime();
-    $template_data = array(
-        'time_format'          => $schedule_object->time_format,
-        'date_format'          => $schedule_object->date_format,
-        'locations_dictionary' => $schedule_object->locations_dictionary,
-        'horizontal_schedule'  => $horizontal_schedule,
-    );
-    $template_loader->set_template_data( $template_data );
+
     ob_start();
-    $template_loader->get_template_part( 'registrants_listing' );
-    /* echo "<pre>";
-    print_r($horizontal_schedule);
-    echo "</pre>"; */
     ?>
-    <div id="mz_registrants_list">
-        <h1>Registrants List</h1>
-        <p>Here is a list of registrants</p>
-    </div>
+    <div id="mz_horizontal_schedule" class="registrants-listing">
+    <?php foreach ( $horizontal_schedule as $day => $classes ) : ?>
+        <details>
+            <summary>
+                <?php echo gmdate( $schedule_object->date_format, strtotime( $day ) ); ?>
+            </summary>
+
+            <?php if ( ! empty( $classes ) ) : ?>
+                <ul>
+                <?php foreach ( $classes as $k => $class ) : ?>
+                    <li>
+                    <?php echo gmdate( $schedule_object->time_format, strtotime( $class->start_datetime ) ) . ' - ' . gmdate( $schedule_object->time_format, strtotime( $class->end_datetime ) ); ?>
+                        <span class="mz_hidden mz_time_of_day"><?php echo $class->part_of_day; ?></span>
+
+                    <?php
+                    $class->class_name_link->output();
+                    ?>
+                    <?php echo $class->display_cancelled; ?>
+                    with
+
+                        <?php
+                        echo $class->staff_name;
+                        ?>
+                    </li>
+                <?php endforeach; ?>
+                </ul>
+            <?php else : ?>
+                <?php esc_html_e( 'No classes to display.', 'mz-mindbody-api' ); ?>
+            <?php endif; // if $classes or else block. ?>
+        </details>
+
+    <?php endforeach; ?>
+</div>
     <?php
     return ob_get_clean();
 });

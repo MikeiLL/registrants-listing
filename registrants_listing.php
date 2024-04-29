@@ -58,6 +58,5 @@ if ( empty( $data->horizontal_schedule ) ) {
             <?php endif; // if $classes or else block. ?>
         </details>
 
-        </div>
     <?php endforeach; ?>
 </div>
