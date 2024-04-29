@@ -1,0 +1,141 @@
+button#MBOLogout {
+  border-radius: 20px;
+  border: 2px solid #AA0011;
+  cursor: pointer;
+  display: flex;
+}
+
+span#MBOLogout {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button#MBOLogout:disabled {
+  border: 2px solid #333;
+  cursor: not-allowed;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button#MBOLogout svg {
+  stroke: #AA0011;
+  width: 25px;
+  height: 25px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  background-color: #777;
+}
+
+button:disabled svg {
+  stroke: #333;
+}
+
+#MBOLogout:hover svg {
+  stroke: #AAAA00;
+}
+
+/**
+ * Grid for our modal windows
+ *
+ */
+
+.modal__wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__footer,
+.modal__header {
+  min-height: 40px;
+  overflow: auto;
+}
+
+.modal__content {
+  flex: 1;
+  padding: 0 1em;
+  overflow: auto;
+}
+
+
+.modal__footer {
+  min-height: 40px;
+  overflow: auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  align-items: center;
+}
+
+.user-info {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  align-items: center;
+}
+
+.client-schedule {
+  list-style-type: none;
+}
+
+.client-schedule ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.client-schedule ul.client-schedule__item li {
+  margin-bottom: 0.5em;
+  display: flex;
+  justify-content: space-between;
+  max-width: 100%;
+  padding: 0.5em;
+  background: #999;
+  gap: 0.2em;
+}
+
+
+
+#mzStudioRegisterForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#mzStudioRegisterForm label {
+  display: flex;
+  justify-content: space-around;
+  margin: 1em 0;
+}
+
+#mzStudioRegisterForm label span {
+  flex: 1;
+}
+
+#mzStudioRegisterForm input {
+  flex: 2;
+}
+
+#mzStudioRegisterForm fieldset {
+  margin: 1em;
+  max-width: 800px;
+  min-width: 400px;
+}
+
+#registerheading {
+  margin: 0 auto;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+#registernotice {
+  margin: 0 auto;
+  font-size: 1.1em;
+  text-align: center;
+  padding: 1em;
+}
