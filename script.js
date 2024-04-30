@@ -4,10 +4,6 @@
       const atts = mz_mindbody_schedule.atts;
       console.log("script loaded", atts);
 
-      if (user_tools.missing_oauth_settings + "" === "true") {
-        console.error("Missing OAuth settings. Please check your Mindbody API settings.");
-      }
-
       /**
        * State will store and track status
        */
