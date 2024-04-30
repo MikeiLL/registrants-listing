@@ -144,7 +144,7 @@ add_shortcode('mz_registrants_list', function(){
                     <li>
                         <details class="show_registrants" data-classid=<?php echo $class->ID; ?>>
                             <summary>
-                                <?php echo gmdate( $schedule_object->time_format, strtotime( $class->start_datetime ) ) . ' - ' . gmdate( $schedule_object->time_format, strtotime( $class->end_datetime ) ); ?>
+                                <?php echo gmdate( $schedule_object->time_format, strtotime( $class->start_datetime ) ); ?>
                                 <span class="mz_hidden mz_time_of_day"><?php echo $class->part_of_day; ?></span>
 
                                 <?php echo $class->class_name; ?>
