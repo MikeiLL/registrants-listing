@@ -44,7 +44,9 @@
         // get the data-classid attribute from the clicked element
         let classID = $(e.currentTarget).data('classid');
         console.log("ClassID", classID);
+        $(e.currentTarget).append('<div class="loading">Loading...</div>');
         const registrants = await fetch_registrants(classID);
+        $(e.currentTarget).find('.loading').remove();
         console.log("Registrants", registrants);
         // append list of registrants to the clicked element
         $(e.currentTarget).append('<ul class="registrants"></ul>');
