@@ -131,7 +131,7 @@ add_shortcode('mz_registrants_list', function(){
 
     ob_start();
     ?>
-    <div id="mz_horizontal_schedule" class="registrants-listing">
+    <div id="mz_registrants_listing">
     <?php foreach ( $horizontal_schedule as $day => $classes ) : ?>
         <details>
             <summary>
@@ -142,18 +142,17 @@ add_shortcode('mz_registrants_list', function(){
                 <ul>
                 <?php foreach ( $classes as $k => $class ) : ?>
                     <li>
-                    <?php echo gmdate( $schedule_object->time_format, strtotime( $class->start_datetime ) ) . ' - ' . gmdate( $schedule_object->time_format, strtotime( $class->end_datetime ) ); ?>
-                        <span class="mz_hidden mz_time_of_day"><?php echo $class->part_of_day; ?></span>
+                        <details class="show_registrants" data-classid=<?php echo $class->ID; ?>>
+                            <summary>
+                                <?php echo gmdate( $schedule_object->time_format, strtotime( $class->start_datetime ) ) . ' - ' . gmdate( $schedule_object->time_format, strtotime( $class->end_datetime ) ); ?>
+                                <span class="mz_hidden mz_time_of_day"><?php echo $class->part_of_day; ?></span>
 
-                    <?php
-                    $class->class_name_link->output();
-                    ?>
-                    <?php echo $class->display_cancelled; ?>
-                    with
-
-                        <?php
-                        echo $class->staff_name;
-                        ?>
+                                <?php echo $class->class_name; ?>
+                                <?php echo $class->display_cancelled; ?>
+                                with
+                                <?php echo $class->staff_name;?>
+                            </summary>
+                        </details>
                     </li>
                 <?php endforeach; ?>
                 </ul>
