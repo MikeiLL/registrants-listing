@@ -121,6 +121,23 @@ button:disabled svg {
   flex: 2;
 }
 
+#mz_registrants_listing details {
+  margin: 1em;
+  display: block;
+  cursor: pointer;
+}
+
+#mz_registrants_listing summary {
+  margin: 1em;
+  display: revert;
+  cursor: pointer;
+}
+
+#mz_registrants_listing ul {
+  list-style-type: none;
+  padding: 0;
+}
+
 #mzStudioRegisterForm fieldset {
   margin: 1em;
   max-width: 800px;

@@ -1,8 +1,7 @@
+console.log("script loaded");
 (function ($) {
     $(document).ready(function ($) {
       // Shortcode atts for current page from parent plugin.
-      const atts = mz_mindbody_schedule.atts;
-      console.log("script loaded", atts);
 
       /**
        * State will store and track status
@@ -16,12 +15,8 @@
         return $.ajax({
           type: "GET",
           dataType: 'json',
-          url: mz_mindbody_schedule.ajaxurl,
-          data: {action: 'mz_mbo_get_registrants', nonce: mz_mindbody_schedule.display_schedule_nonce, classID: classID},
-          beforeSend: function() {
-            mz_mbo_state.action = 'processing';
-            mz_mbo_state.fetching = 'ClassRegistrants';
-          },
+          url: mz_registrants_list.ajaxurl,
+          data: {action: 'mz_mbo_get_registrants', nonce: mz_registrants_list.display_schedule_nonce, classID: classID},
           success: function (json) {
             if (json.type == "success") {
               return {'registrants': json.message};
@@ -39,11 +34,9 @@
       $('#mz_registrants_listing').on('click', '.show_registrants', async (e) => {
         // get the data-classid attribute from the clicked element
         let classID = $(e.currentTarget).data('classid');
-        console.log("ClassID", classID);
         $(e.currentTarget).append('<div class="loading">Loading...</div>');
         const registrants = await fetch_registrants(classID);
         $(e.currentTarget).find('.loading').remove();
-        console.log("Registrants", registrants);
         // append list of registrants to the clicked element
         $(e.currentTarget).append('<ul class="registrants"></ul>');
         if (registrants.error) {
