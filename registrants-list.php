@@ -114,8 +114,29 @@ function mindbody_registrants_has_mindbody_api() {
 }
 
 
-add_shortcode('mz_registrants_list', function(){
-    $schedule_object = new \MZoo\MzMindbody\Schedule\RetrieveSchedule(  );
+add_shortcode('mz_registrants_list', function( $shortcode_atts ) {
+
+    $atts = shortcode_atts(
+        array(
+            'type'      => 'week',
+            'locations' => [1],
+            'session_types'         => '',
+            'duration'  => '+13 day',
+        ),
+        $shortcode_atts
+    );
+    // If set, turn Session/Class Types into an Array and call it session_types.
+    if ( '' !== $atts['session_types'] ) {
+        if ( ! is_array( $atts['session_types'] ) ) { // if not already an array.
+            $atts['session_types'] = explode( ',', $atts['session_types'] );
+        }
+        // TODO: is this sometimes done reduntantly?
+        foreach ( $atts['session_types'] as $key => $type ) :
+            $atts['session_types'][ $key ] = trim( $type );
+        endforeach;
+    }
+
+    $schedule_object = new \MZoo\MzMindbody\Schedule\RetrieveSchedule( $atts );
 
     // Call the API and if fails, return error message.
     if ( false === $schedule_object->get_mbo_results() ) {

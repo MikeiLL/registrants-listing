@@ -29,6 +29,7 @@ function enqueue_scripts() {
   wp_enqueue_script( 'mz_registrants_list' );
 
   $translated_strings = \MZoo\MzMindbody\MZMBO()->i18n->get();
+  $protocol = isset( $_SERVER['HTTPS'] ) ? 'https://' : 'http://';
 
   $params = array(
     'ajaxurl'                => admin_url( 'admin-ajax.php', $protocol ),
