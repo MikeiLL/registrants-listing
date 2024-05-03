@@ -221,3 +221,21 @@ button:disabled svg {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.bw-widget__header {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.03);
+  color: #2d2d2d;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 16px;
+  text-align: left;
+}
+
+.bw-header__title {
+  -webkit-flex-grow: 1;
+  flex-grow: 1;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+}

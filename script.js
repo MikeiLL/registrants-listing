@@ -32,7 +32,8 @@ console.log("script loaded");
      }
 
       $('#mz_registrants_listing').on('click', '.show_registrants', async (e) => {
-        // get the data-classid attribute from the clicked element
+        const registrantList = $(e.currentTarget).find('ul.registrants');
+        if (registrantList.length >= 1 ) return;// already fetched
         let classID = $(e.currentTarget).data('classid');
         $(e.currentTarget).append('<div class="loading">Fetching registrants...</div>');
         const registrants = await fetch_registrants(classID);

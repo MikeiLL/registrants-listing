@@ -147,6 +147,7 @@ add_shortcode('mz_registrants_list', function( $shortcode_atts ) {
     ob_start();
     ?>
     <div id="mz_registrants_listing">
+        <div class="bw-widget__header"><h3 class="bw-header__title">Registrants List</h3></div>
     <?php foreach ( $horizontal_schedule as $day => $classes ) : ?>
         <details>
             <summary class="bw-widget__date">
