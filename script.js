@@ -1,4 +1,3 @@
-console.log("script loaded");
 (function ($) {
     $(document).ready(function ($) {
       // Shortcode atts for current page from parent plugin.
