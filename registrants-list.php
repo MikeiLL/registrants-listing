@@ -149,7 +149,7 @@ add_shortcode('mz_registrants_list', function( $shortcode_atts ) {
     <div id="mz_registrants_listing">
     <?php foreach ( $horizontal_schedule as $day => $classes ) : ?>
         <details>
-            <summary>
+            <summary class="bw-widget__date">
                 <?php echo gmdate( $schedule_object->date_format, strtotime( $day ) ); ?>
             </summary>
 
@@ -158,14 +158,14 @@ add_shortcode('mz_registrants_list', function( $shortcode_atts ) {
                 <?php foreach ( $classes as $k => $class ) : ?>
                     <li>
                         <details class="show_registrants" data-classid=<?php echo $class->ID; ?>>
-                            <summary>
-                                <?php echo gmdate( $schedule_object->time_format, strtotime( $class->start_datetime ) ); ?>
-                                <span class="mz_hidden mz_time_of_day"><?php echo $class->part_of_day; ?></span>
-
-                                <?php echo $class->class_name; ?>
-                                <?php echo $class->display_cancelled; ?>
-                                with
-                                <?php echo $class->staff_name;?>
+                            <summary class="bw-session__info">
+                                <span class="bw-session__time">
+                                    <?php echo gmdate( $schedule_object->time_format, strtotime( $class->start_datetime ) ); ?>
+                                    <?php echo $class->class_name; ?>
+                                </span>
+                                <span class="bw-session__staff">
+                                    <?php echo $class->staff_name;?>
+                                </span>
                             </summary>
                         </details>
                     </li>

@@ -121,21 +121,39 @@ button:disabled svg {
   flex: 2;
 }
 
-#mz_registrants_listing details {
+
+#mz_registrants_listing>details details {
   margin: 1em;
-  display: block;
-  cursor: pointer;
 }
 
 #mz_registrants_listing summary {
-  margin: 1em;
+  margin: 1em 0;
   display: revert;
   cursor: pointer;
+}
+
+#mz_registrants_listing>summary summary {
+  margin: 1em;
 }
 
 #mz_registrants_listing ul {
   list-style-type: none;
   padding: 0;
+}
+
+#mz_registrants_listing .show_registrants ul,
+#mz_registrants_listing .loading {
+  list-style-type: none;
+  padding: 0 1.8em;
+  border-radius: 5px;
+  font-size: 13px;
+  line-height: 18px;
+  border: 1px solid #607d8b;
+  color: #607d8b;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0.5em;
 }
 
 #mzStudioRegisterForm fieldset {
@@ -155,4 +173,51 @@ button:disabled svg {
   font-size: 1.1em;
   text-align: center;
   padding: 1em;
+}
+
+.bw-widget__date {
+  background-color: rgba(0, 0, 0, 0.03);
+  color: rgba(0, 0, 0, 0.8);
+  font-size: 14px;
+  line-height: 20px;
+  padding: 8px 16px;
+  border-top-style: none;
+  border-bottom-style: solid;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, 0.1);
+  font-weight: 700;
+}
+
+.bw-session__info {
+  flex-grow: 1;
+  margin-right: 16px;
+  min-width: 0;
+}
+
+.bw-session__time {
+  color: #2d2d2d;
+  font-size: 14px;
+  line-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 160px;
+}
+
+.bw-session__name {
+  color: #2d2d2d;
+  font-size: 14px;
+  line-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.bw-session__staff {
+  font-size: 13px;
+  line-height: 18px;
+  color: #696c74;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
